@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/brand_300">
+
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp"/>
+            <solid android:color="@android:color/white"/>
+        </shape>
+    </item>
+
+    <!-- different states -->
+    <item>
+        <selector>
+            <!-- disabled -->
+            <item android:state_enabled="false">
+                <shape android:shape="rectangle">
+                    <corners android:radius="16dp"/>
+                    <solid android:color="#FFE1D3"/> <!-- light, derived from brand -->
+                </shape>
+            </item>
+
+            <!-- pressed -->
+            <item android:state_pressed="true">
+                <shape android:shape="rectangle">
+                    <corners android:radius="16dp"/>
+                    <solid android:color="@color/brand_700"/>
+                </shape>
+            </item>
+
+            <!-- default -->
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="16dp"/>
+                    <solid android:color="@color/brand_600"/>
+                </shape>
+            </item>
+        </selector>
+    </item>
+</ripple>

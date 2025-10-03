@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Food Delivery App</string>
+    <string name="update_address">update_address</string>
+</resources>

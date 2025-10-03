@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="@color/warm_bg_start"
+                android:endColor="@color/warm_bg_end"
+                android:angle="90"/>
+        </shape>
+    </item>
+</layer-list>
