@@ -17,6 +17,7 @@ import com.example.fooddeliveryapp.DataModel.RegisterUserRequest
 import com.example.fooddeliveryapp.DataModel.RegisterUserResponse
 import com.example.fooddeliveryapp.DataModel.RemoveFavouriteMenuItemResponse
 import com.example.fooddeliveryapp.DataModel.RemoveFavouriteRestaurantResponse
+import com.example.fooddeliveryapp.DataModel.RemoveItemFromCartModelResponse
 import com.example.fooddeliveryapp.DataModel.SavedAddressResponse
 import com.example.fooddeliveryapp.DataModel.SearchMenuItemResponse
 import com.example.fooddeliveryapp.DataModel.SearchRestaurantResponse
@@ -55,4 +56,5 @@ interface ApiService {
     @POST("cart/add-cart") fun addToCart(@Body cartRequest: AddtoCartRequest): Call<AddtoCartModelResponse>
     @POST("favourite/add-favourite-menuItem/{menuItemId}") fun addFavouriteMenuItem(@Path("menuItemId") menuItemId: String): Call<AddFavouriteMenuItemResponse>
     @GET("cart/get-cart") fun getCart(): Call<GetCartModelResponse>
+    @DELETE("cart/remove-item/{cartItemId}") fun removeItemFromCart(@Path("cartItemId") cartItemId: String): Call<RemoveItemFromCartModelResponse>
 }

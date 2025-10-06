@@ -95,6 +95,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddressActivity::class.java))
             finish()
         }
+
+        binding.cartBtn.setOnClickListener {
+            startActivity(Intent(this, CartActivity::class.java))
+            finish()
+        }
     }
     private fun setupAdapters() {
         heroBannerAdapter = HeroBannerAdapter(emptyList())

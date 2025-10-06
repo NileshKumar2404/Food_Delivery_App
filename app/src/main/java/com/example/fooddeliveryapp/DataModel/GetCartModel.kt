@@ -2,12 +2,22 @@ package com.example.fooddeliveryapp.DataModel
 
 data class GetCartModelResponse(
     val statusCode: Int,
-    val data: Items,
+    val data: GetCartData,
     val message: String,
     val success: Boolean
 )
-data class Items(
+data class GetCartData(
     val cartItems: List<CartItems>,
+    val total: Int
+)
+data class RemoveItemFromCartModelResponse(
+    val statusCode: Int,
+    val data: RemoveCartData,
+    val message: String,
+    val success: Boolean
+)
+data class RemoveCartData(
+    val cart: List<CartItems>,
     val total: Int
 )
 data class CartItems(

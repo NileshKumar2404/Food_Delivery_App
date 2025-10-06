@@ -7,9 +7,9 @@ data class GetMenuItemsModelResponse(
     val success: Boolean
 )
 data class MenuItemWrapper(
-    val menuItem: menuItemData
+    val menuItem: MenuItemDataContainer
 )
-data class menuItemData(
+data class MenuItemDataContainer(
     val _id: String,
     val name: String,
     val restaurant: RestaurantDetails,

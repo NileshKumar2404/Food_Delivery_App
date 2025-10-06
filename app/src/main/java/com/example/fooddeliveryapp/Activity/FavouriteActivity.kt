@@ -19,7 +19,6 @@ import com.example.fooddeliveryapp.AuthInterceptor.AuthInterceptor
 import com.example.fooddeliveryapp.DataModel.FavouriteMenuItem
 import com.example.fooddeliveryapp.DataModel.FavouriteRestaurant
 import com.example.fooddeliveryapp.DataModel.GetListOfFavouritesResponse
-import com.example.fooddeliveryapp.DataModel.MenuItems
 import com.example.fooddeliveryapp.DataModel.RemoveFavouriteMenuItemResponse
 import com.example.fooddeliveryapp.DataModel.RemoveFavouriteRestaurantResponse
 import com.example.fooddeliveryapp.R
