@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fooddeliveryapp.Activity.FoodDetailsActivity
 import com.example.fooddeliveryapp.DataModel.CreatedRestaurants
+import com.example.fooddeliveryapp.DataModel.RestaurantMenu
 import com.example.fooddeliveryapp.databinding.ViewRecommendedWideCardBinding
 
 class RecommendedAdapter(
     private var restaurantList: List<CreatedRestaurants>,
-    private val onAddClick: (CreatedRestaurants) -> Unit
+    private val onAddClick: (RestaurantMenu) -> Unit
 ): RecyclerView.Adapter<RecommendedAdapter.RecommendedViewHolder> () {
 
     inner class RecommendedViewHolder(val binding: ViewRecommendedWideCardBinding) :
@@ -45,7 +46,7 @@ class RecommendedAdapter(
                 .into(ivThumb)
 
             btnAdd.setOnClickListener {
-                onAddClick(restaurant)
+                onAddClick(restaurant.menu.first())
             }
         }
     }

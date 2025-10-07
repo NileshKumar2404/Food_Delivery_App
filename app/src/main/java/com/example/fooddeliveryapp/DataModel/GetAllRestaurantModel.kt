@@ -1,7 +1,5 @@
 package com.example.fooddeliveryapp.DataModel
 
-import android.view.Menu
-
 data class GetAllRestaurantResponse(
     val statusCode: Int,
     val data: AllRestaurants,

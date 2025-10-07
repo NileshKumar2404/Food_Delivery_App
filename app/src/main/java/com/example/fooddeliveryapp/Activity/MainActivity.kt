@@ -18,9 +18,12 @@ import com.example.fooddeliveryapp.Adapter.HeroBannerAdapter
 import com.example.fooddeliveryapp.Adapter.RecommendedAdapter
 import com.example.fooddeliveryapp.Adapter.TopRatedRestaurantAdapter
 import com.example.fooddeliveryapp.AuthInterceptor.AuthInterceptor
+import com.example.fooddeliveryapp.DataModel.AddtoCartModelResponse
+import com.example.fooddeliveryapp.DataModel.AddtoCartRequest
 import com.example.fooddeliveryapp.DataModel.AllRestaurants
 import com.example.fooddeliveryapp.DataModel.FeaturedRestaurantResponse
 import com.example.fooddeliveryapp.DataModel.GetAllRestaurantResponse
+import com.example.fooddeliveryapp.DataModel.RestaurantMenu
 import com.example.fooddeliveryapp.DataModel.SearchRestaurantResponse
 import com.example.fooddeliveryapp.DataModel.TopRatedRestaurantResponse
 //import com.example.fooddeliveryapp.DataModel.TopRatedRestaurants
@@ -46,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var heroBannerAdapter: HeroBannerAdapter
     private lateinit var recommendedAdapter: RecommendedAdapter
     private lateinit var trustedAdapter: TopRatedRestaurantAdapter
+//    private lateinit var menuItemId: List<RestaurantMenu>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,9 +117,51 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvRecommended.layoutManager = LinearLayoutManager(this)
         recommendedAdapter = RecommendedAdapter(emptyList()) { menuItem ->
-            Toast.makeText(this, "Clicked add on ${menuItem.name}", Toast.LENGTH_SHORT).show() // Replace with your logic
+            addInCart(menuItem._id, 1)
         }
         binding.rvRecommended.adapter = recommendedAdapter
+    }
+    private fun addInCart(menuItemId: String?, quantity: Int) {
+        val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val authInterceptor = AuthInterceptor.AuthInterceptor(sharedPreferences)
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(RetrofitInstance.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+
+        val apiServiceWithInterceptor = retrofit.create(ApiService::class.java)
+
+        val request = AddtoCartRequest(menuItemId!!, quantity)
+
+        apiServiceWithInterceptor.addToCart(request).enqueue(object : Callback<AddtoCartModelResponse> {
+            override fun onResponse(
+                call: Call<AddtoCartModelResponse?>,
+                response: Response<AddtoCartModelResponse?>
+            ) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@MainActivity, "Added to cart", Toast.LENGTH_SHORT).show()
+                }else {
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@MainActivity, "Added to cart", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val errorBody = response.errorBody()?.string()
+                        Log.e("CartAPI", "Failed: ${response.code()} | ${errorBody}")
+                        Toast.makeText(this@MainActivity, "Failed to add in cart: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<AddtoCartModelResponse?>, t: Throwable) {
+                Log.e("Cart", "Error adding to cart: ${t.localizedMessage}")
+                Toast.makeText(this@MainActivity, "${t.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
     private fun loadHeroBanners() {
         val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
@@ -197,7 +243,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-    private fun loadRecommended() {
+    private fun loadRecommended()  {
         binding.pbRecommended.visibility = View.VISIBLE
 
         val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
@@ -223,7 +269,7 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     binding.pbRecommended.visibility = View.GONE
 
-                    val recommended = response.body()!!.data.restaurants
+                    val recommended = response.body()!!.data.restaurants ?: emptyList()
                     recommendedAdapter.updateList(recommended)
                 }else {
                     Toast.makeText(this@MainActivity, "Failed to load restaurants", Toast.LENGTH_SHORT).show()
