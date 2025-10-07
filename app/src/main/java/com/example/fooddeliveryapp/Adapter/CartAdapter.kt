@@ -66,11 +66,6 @@ class CartAdapter (
         notifyDataSetChanged()
     }
 
-    fun removeAt(position: Int) {
-        cartItems.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
     fun updateQuantity(position: Int, newQty: Int) {
         cartItems[position] = cartItems[position].copy(quantity = newQty)
         notifyItemChanged(position)

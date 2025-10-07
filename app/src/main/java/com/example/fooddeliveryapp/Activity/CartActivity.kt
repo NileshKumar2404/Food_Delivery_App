@@ -133,12 +133,10 @@ class CartActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     val updatedData = response.body()!!.data
-                    cartList.clear()
-                    cartList.addAll(updatedData.cart)
-                    adapter.updateList(cartList)
                     binding.tvcartTotal.text = "₹${updatedData.total}"
                     toggleEmptyState()
                     Toast.makeText(this@CartActivity, "Item removed from cart", Toast.LENGTH_SHORT).show()
+                    fetchCartItems()
                 }else {
                     Toast.makeText(this@CartActivity, "Failed to remove item from cart", Toast.LENGTH_SHORT).show()
                 }
