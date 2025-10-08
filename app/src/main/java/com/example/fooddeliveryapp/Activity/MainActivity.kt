@@ -104,6 +104,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, CartActivity::class.java))
             finish()
         }
+
+        binding.tvRecommendedViewAll.setOnClickListener {
+            startActivity(Intent(this, MenuItemActivity::class.java))
+            finish()
+        }
     }
     private fun setupAdapters() {
         heroBannerAdapter = HeroBannerAdapter(emptyList())

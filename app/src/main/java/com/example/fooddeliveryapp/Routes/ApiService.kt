@@ -7,6 +7,7 @@ import com.example.fooddeliveryapp.DataModel.AddtoCartModelResponse
 import com.example.fooddeliveryapp.DataModel.AddtoCartRequest
 import com.example.fooddeliveryapp.DataModel.DeleteSavedAddressResponse
 import com.example.fooddeliveryapp.DataModel.FeaturedRestaurantResponse
+import com.example.fooddeliveryapp.DataModel.GetAllMenuItemsModelResponse
 import com.example.fooddeliveryapp.DataModel.GetAllRestaurantResponse
 import com.example.fooddeliveryapp.DataModel.GetCartModelResponse
 import com.example.fooddeliveryapp.DataModel.GetListOfFavouritesResponse
@@ -57,4 +58,5 @@ interface ApiService {
     @POST("favourite/add-favourite-menuItem/{menuItemId}") fun addFavouriteMenuItem(@Path("menuItemId") menuItemId: String): Call<AddFavouriteMenuItemResponse>
     @GET("cart/get-cart") fun getCart(): Call<GetCartModelResponse>
     @DELETE("cart/remove-item/{cartItemId}") fun removeItemFromCart(@Path("cartItemId") cartItemId: String): Call<RemoveItemFromCartModelResponse>
+    @GET("menuItem/get-all-menuItems") fun getAllMenuItems(): Call<GetAllMenuItemsModelResponse>
 }

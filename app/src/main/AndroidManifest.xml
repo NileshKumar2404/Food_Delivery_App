@@ -19,6 +19,9 @@
         android:theme="@style/Theme.FoodDeliveryApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.MenuItemActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.CartActivity"
             android:exported="false" />
         <activity
