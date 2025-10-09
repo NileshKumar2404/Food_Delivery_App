@@ -88,6 +88,10 @@ class FavouriteActivity : AppCompatActivity() {
             startActivity(Intent(this, ProfileViewActivity::class.java))
             finish()
         }
+        binding.cartBtn.setOnClickListener {
+            startActivity(Intent(this, MenuItemActivity::class.java))
+            finish()
+        }
     }
     private fun loadFavourites() {
         binding.errorPb.visibility = View.VISIBLE
