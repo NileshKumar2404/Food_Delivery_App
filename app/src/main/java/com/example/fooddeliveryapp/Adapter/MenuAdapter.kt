@@ -1,9 +1,11 @@
 package com.example.fooddeliveryapp.Adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.fooddeliveryapp.Activity.FoodDetailsActivity
 import com.example.fooddeliveryapp.DataModel.MenuItemsContainer
 import com.example.fooddeliveryapp.databinding.ViewRecommendedWideCardBinding
 
@@ -33,6 +35,14 @@ class MenuAdapter(
             Glide.with(holder.itemView.context)
                 .load(menu.image)
                 .into(ivThumb)
+
+            card.setOnClickListener {
+                menu._id.let { id ->
+                    val intent = Intent(holder.itemView.context, FoodDetailsActivity::class.java)
+                    intent.putExtra("MENU_ITEM_ID", id)
+                    holder.itemView.context.startActivity(intent)
+                }
+            }
 
             btnAdd.setOnClickListener {
                 onAddClicked(menu)

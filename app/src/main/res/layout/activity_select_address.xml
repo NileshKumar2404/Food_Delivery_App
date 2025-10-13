@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F9FAFB">
+
+    <TextView
+        android:id="@+id/tvSelectAddressTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Delivery Address"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="12dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAddresses"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        android:layout_weight="1"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnConfirmAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm Address"
+        android:background="@drawable/bg_btn"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="12dp"/>
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#B0BEC5"/>
+
+</LinearLayout>

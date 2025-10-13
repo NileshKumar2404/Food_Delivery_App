@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var heroBannerAdapter: HeroBannerAdapter
     private lateinit var recommendedAdapter: RecommendedAdapter
     private lateinit var trustedAdapter: TopRatedRestaurantAdapter
-//    private lateinit var menuItemId: List<RestaurantMenu>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

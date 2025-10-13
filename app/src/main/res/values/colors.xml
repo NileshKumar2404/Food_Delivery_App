@@ -20,6 +20,7 @@
     <color name="white">#FFFFFF</color>
     <color name="ink_300">#D1D5DB</color>
     <color name="ink_200">#E5E7EB</color>
+    <color name="ink_100">#F2F2F2</color>
 
     <!-- Background gradient -->
     <color name="warm_bg_start">#FFFFFFFF</color>

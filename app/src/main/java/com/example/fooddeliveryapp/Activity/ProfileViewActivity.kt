@@ -63,7 +63,7 @@ class ProfileViewActivity : AppCompatActivity() {
         }
 
         binding.cartBtn.setOnClickListener {
-            startActivity(Intent(this, MenuItemActivity::class.java))
+            startActivity(Intent(this, CartActivity::class.java))
             finish()
         }
     }

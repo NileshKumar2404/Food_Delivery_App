@@ -33,6 +33,7 @@ class FoodDetailsActivity : AppCompatActivity() {
     private var isFavourite = false
     private lateinit var binding: ActivityFoodDetailsBinding
     private var menuItemId: String? = null
+    private var restaurantId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,12 +57,14 @@ class FoodDetailsActivity : AppCompatActivity() {
         binding.btnPlus.setOnClickListener {
             currentQty++
             binding.tvQty.text = currentQty.toString()
+//            updateTotalPrice(currentQty)
         }
 
         binding.btnMinus.setOnClickListener {
             if (currentQty > 1) {
                 currentQty--
                 binding.tvQty.text = currentQty.toString()
+//                updateTotalPrice(currentQty)
             }
         }
 
@@ -93,6 +96,19 @@ class FoodDetailsActivity : AppCompatActivity() {
 
             fetchMenuDetails(it) }
             ?: Toast.makeText(this, "No menu item id provided", Toast.LENGTH_SHORT).show()
+
+        binding.btnBuyNow.setOnClickListener {
+            if (restaurantId == null) {
+                Toast.makeText(this, "Restaurant id is not available", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val intent = Intent(this, BuyNowActivity::class.java)
+            intent.putExtra("menuItemId", menuItemId)
+            intent.putExtra("restaurantId", restaurantId)
+            intent.putExtra("quantity", currentQty)
+            startActivity(intent)
+        }
     }
     private fun addToFavourite(menuItemId: String?) {
         val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
@@ -205,6 +221,7 @@ class FoodDetailsActivity : AppCompatActivity() {
                 showLoading(false)
                 if (response.isSuccessful && response.body() != null) {
                     val menuItem = response.body()!!.data.menuItem
+                    restaurantId = menuItem.restaurant._id
                     populateUI(
                         menuItem.name,
                         menuItem.description,
@@ -238,5 +255,11 @@ class FoodDetailsActivity : AppCompatActivity() {
     }
     private fun showLoading(isLoading: Boolean) {
         binding.pbDetails.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun updateTotalPrice(qty: Int) {
+        val price = binding.tvTotal.text.toString().replace("Rs", "").toDoubleOrNull() ?: 0.0
+        val total = price * qty
+        binding.tvTotal.text = "$%.2f".format(total)
     }
 }
