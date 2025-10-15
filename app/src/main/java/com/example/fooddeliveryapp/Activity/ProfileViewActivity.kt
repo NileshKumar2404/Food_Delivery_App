@@ -66,6 +66,11 @@ class ProfileViewActivity : AppCompatActivity() {
             startActivity(Intent(this, CartActivity::class.java))
             finish()
         }
+
+        binding.llOrders.setOnClickListener {
+            startActivity(Intent(this, MyOrderActivity::class.java))
+            finish()
+        }
     }
     private fun logoutUser() {
         val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)

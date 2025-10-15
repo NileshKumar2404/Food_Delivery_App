@@ -12,6 +12,7 @@ import com.example.fooddeliveryapp.DataModel.GetAllRestaurantResponse
 import com.example.fooddeliveryapp.DataModel.GetCartModelResponse
 import com.example.fooddeliveryapp.DataModel.GetListOfFavouritesResponse
 import com.example.fooddeliveryapp.DataModel.GetMenuItemsModelResponse
+import com.example.fooddeliveryapp.DataModel.GetMyOrderModelResponse
 import com.example.fooddeliveryapp.DataModel.LoginUserRequest
 import com.example.fooddeliveryapp.DataModel.LoginUserResponse
 import com.example.fooddeliveryapp.DataModel.PlaceOrderRequest
@@ -62,4 +63,5 @@ interface ApiService {
     @DELETE("cart/remove-item/{cartItemId}") fun removeItemFromCart(@Path("cartItemId") cartItemId: String): Call<RemoveItemFromCartModelResponse>
     @GET("menuItem/get-all-menuItems") fun getAllMenuItems(): Call<GetAllMenuItemsModelResponse>
     @POST("order/place-order") fun placeOrder(@Body orderRequest: PlaceOrderRequest): Call<PlaceOrderResponse>
+    @GET("order/get-my-orders") fun getUserOrder(): Call<GetMyOrderModelResponse>
 }

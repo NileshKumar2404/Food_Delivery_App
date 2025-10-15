@@ -19,6 +19,9 @@
         android:theme="@style/Theme.FoodDeliveryApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.MyOrderActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.SelectAddressActivity"
             android:exported="false" />
         <activity

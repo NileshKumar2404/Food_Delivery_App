@@ -35,13 +35,12 @@ class SelectedAddressAdapter(
             tvAddressLabel.text = address.label ?: "Home"
             tvAddressDetails.text = "${address.street}, ${address.city}, ${address.state} - ${address.pinCode}"
 
-            // Highlight selected card visually (optional)
             root.alpha = if (selectedPosition == position) 0.8f else 1f
 
             root.setOnClickListener {
                 selectedPosition = position
                 notifyDataSetChanged()
-                onSelect(address._id) // Send selected ID back
+                onSelect(address._id) 
             }
         }
     }
