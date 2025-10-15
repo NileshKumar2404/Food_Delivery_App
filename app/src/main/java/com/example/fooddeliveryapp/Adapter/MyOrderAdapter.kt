@@ -28,10 +28,13 @@ class MyOrderAdapter(
     ) {
         val orderList = orders[position]
 
+        val menuNames = orderList.menuItemDetails.map { it.name }
+
         holder.binding.apply {
             tvRestaurantName.text = orderList.restaurantDetails.name
             tvCuisineType.text = "Cuisine: ${orderList.restaurantDetails.cuisine.joinToString( ", " )}"
             tvTotalPrice.text = "₹${orderList.totalPrice}"
+            tvMenuName.text = "Item: ${menuNames.joinToString(", ")}"
 
             tvPaymentMethod.text = "Payment: ${orderList.payment.method}"
             tvOrderStatus.text = "Delivery Status: ${orderList.status}"

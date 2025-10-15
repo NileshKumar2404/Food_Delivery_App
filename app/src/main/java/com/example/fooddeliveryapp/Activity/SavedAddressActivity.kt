@@ -58,6 +58,10 @@ class SavedAddressActivity : AppCompatActivity() {
             startActivity(Intent(this, AddressActivity::class.java))
             finish()
         }
+
+        binding.savedAddressRefresh.setOnRefreshListener {
+            fetchSavedAddresses()
+        }
     }
     private fun setUpRecyclerview() {
         adapter = SavedAddressAdapter(savedAddresses,
@@ -90,6 +94,7 @@ class SavedAddressActivity : AppCompatActivity() {
                 response: Response<SavedAddressResponse?>
             ) {
                 showLoading(false)
+                binding.savedAddressRefresh.isRefreshing = false
                 if (response.isSuccessful) {
                     binding.rvSavedAddress.visibility = View.VISIBLE
                     
@@ -111,6 +116,7 @@ class SavedAddressActivity : AppCompatActivity() {
                 }
             }
             override fun onFailure(call: Call<SavedAddressResponse?>, t: Throwable) {
+                binding.savedAddressRefresh.isRefreshing = false
                 showLoading(false)
                 Log.e("fetch address error: ", "${t.localizedMessage}")
                 Toast.makeText(

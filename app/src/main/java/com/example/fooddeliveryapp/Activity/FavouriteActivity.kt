@@ -77,6 +77,10 @@ class FavouriteActivity : AppCompatActivity() {
         binding.tvMenuItem.setOnClickListener {
             showMenuItems()
         }
+
+        binding.favouriteRefresh.setOnRefreshListener {
+            loadFavourites()
+        }
     }
     private fun setupBottomNav() {
         binding.favouriteBtn.setColorFilter(getColor(R.color.brand_600))
@@ -119,6 +123,8 @@ class FavouriteActivity : AppCompatActivity() {
                 response: Response<GetListOfFavouritesResponse?>
             ) {
                 if (response.isSuccessful && response.body() != null) {
+                    binding.favouriteRefresh.isRefreshing = false
+
                     binding.errorPb.visibility = View.GONE
 
                     val data = response.body()!!.data
@@ -144,6 +150,7 @@ class FavouriteActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<GetListOfFavouritesResponse?>, t: Throwable) {
+                binding.favouriteRefresh.isRefreshing = false
                 binding.errorPb.visibility = View.GONE
                 showError(t.message ?: "Error occurred")
                 Log.e("FavouriteActivity", "Error: ${t.message}")

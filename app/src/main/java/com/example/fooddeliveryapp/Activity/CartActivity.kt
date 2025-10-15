@@ -51,6 +51,10 @@ class CartActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
+
+        binding.cartRefreshLayout.setOnRefreshListener {
+            fetchCartItems()
+        }
     }
     private fun setupRecyclerView() {
         adapter = CartAdapter(
@@ -90,6 +94,7 @@ class CartActivity : AppCompatActivity() {
                 response: Response<GetCartModelResponse?>
             ) {
                 showLoading(false)
+                binding.cartRefreshLayout.isRefreshing = false
                 if (response.isSuccessful) {
                     val data = response.body()!!.data
 
@@ -105,6 +110,7 @@ class CartActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<GetCartModelResponse?>, t: Throwable) {
                 showLoading(false)
+                binding.cartRefreshLayout.isRefreshing = false
                 Log.e("CartActivity Error: ", "${t.localizedMessage}")
                 Toast.makeText(this@CartActivity, "Failed to fetch cart", Toast.LENGTH_SHORT).show()
             }

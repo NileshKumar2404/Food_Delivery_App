@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="My Favourites"
+                android:fontFamily="@font/poppins_medium"
                 android:textColor="@color/ink_900"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -74,12 +75,20 @@
             android:layout_gravity="center"
             android:visibility="gone" />
 
-        <!-- RecyclerViews -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFavouriteRestaurants"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/favouriteRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp" />
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!-- RecyclerViews -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFavouriteRestaurants"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFavouriteMenuItems"
@@ -87,7 +96,6 @@
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:visibility="gone" />
-
     </LinearLayout>
 
     <LinearLayout
