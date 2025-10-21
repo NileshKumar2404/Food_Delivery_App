@@ -81,6 +81,11 @@ class FavouriteActivity : AppCompatActivity() {
         binding.favouriteRefresh.setOnRefreshListener {
             loadFavourites()
         }
+
+        binding.ivCart.setOnClickListener {
+            startActivity(Intent(this, CartActivity::class.java))
+            finish()
+        }
     }
     private fun setupBottomNav() {
         binding.favouriteBtn.setColorFilter(getColor(R.color.brand_600))
