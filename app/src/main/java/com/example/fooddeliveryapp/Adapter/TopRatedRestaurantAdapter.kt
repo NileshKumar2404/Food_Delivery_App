@@ -2,14 +2,15 @@ package com.example.fooddeliveryapp.Adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fooddeliveryapp.DataModel.listtopRatedRestaurants
+import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.databinding.ViewFoodSmallCardBinding
 
 class TopRatedRestaurantAdapter (
     private var restaurant: List<listtopRatedRestaurants>,
-    private val onItemClick: (listtopRatedRestaurants) -> Unit
 ): RecyclerView.Adapter<TopRatedRestaurantAdapter.TopRatedRestaurantViewHolder> (){
 
     override fun onCreateViewHolder(
@@ -28,17 +29,13 @@ class TopRatedRestaurantAdapter (
 
         val addressText = "${restaurant.address.street}, ${restaurant.address.city}"
         holder.binding.apply {
-            resName.text = restaurant?.name
+            resName.text = restaurant.name
             restaurantAddress.text = addressText
-            ratings.text = restaurant?.ratings.toString()
+            ratings.text = restaurant.ratings.toString()
 
             Glide.with(ivFood)
                 .load(restaurant.image)
                 .into(ivFood)
-
-            btnAdd.setOnClickListener {
-                onItemClick(restaurant)
-            }
         }
     }
 
@@ -51,4 +48,7 @@ class TopRatedRestaurantAdapter (
         restaurant = newList
         notifyDataSetChanged()
     }
+
+    fun getRestaurants() = restaurant
+
 }

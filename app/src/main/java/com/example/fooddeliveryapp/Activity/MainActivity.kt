@@ -21,8 +21,10 @@ import com.example.fooddeliveryapp.AuthInterceptor.AuthInterceptor
 import com.example.fooddeliveryapp.DataModel.AddtoCartModelResponse
 import com.example.fooddeliveryapp.DataModel.AddtoCartRequest
 import com.example.fooddeliveryapp.DataModel.AllRestaurants
+import com.example.fooddeliveryapp.DataModel.FavouriteRestaurantModelResponse
 import com.example.fooddeliveryapp.DataModel.FeaturedRestaurantResponse
 import com.example.fooddeliveryapp.DataModel.GetAllRestaurantResponse
+import com.example.fooddeliveryapp.DataModel.RemoveFavouriteRestaurantResponse
 import com.example.fooddeliveryapp.DataModel.RestaurantMenu
 import com.example.fooddeliveryapp.DataModel.SearchRestaurantResponse
 import com.example.fooddeliveryapp.DataModel.TopRatedRestaurantResponse
@@ -44,6 +46,7 @@ import kotlin.math.log
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var favouriteIds: MutableSet<String>
 
     //Adapters
     private lateinit var heroBannerAdapter: HeroBannerAdapter
@@ -110,15 +113,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun setupAdapters() {
+        val prefs = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        favouriteIds = prefs.getStringSet("favourite_restaurants", emptySet())?.toMutableSet() ?: mutableSetOf()
+
         heroBannerAdapter = HeroBannerAdapter(emptyList())
         binding.vpHeroBanner.adapter = heroBannerAdapter
 
         binding.rvTrusted.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        trustedAdapter = TopRatedRestaurantAdapter(emptyList()) { restaurant: listtopRatedRestaurants ->
-            Toast.makeText(this, "Clicked add on ${restaurant.name}", Toast.LENGTH_SHORT).show() // Replace with your logic
-        }
+        trustedAdapter = TopRatedRestaurantAdapter(
+            emptyList(),
+        )
         binding.rvTrusted.adapter = trustedAdapter
 
+        // Recommended section (unchanged)
         binding.rvRecommended.layoutManager = LinearLayoutManager(this)
         recommendedAdapter = RecommendedAdapter(emptyList()) { menuItem ->
             addInCart(menuItem._id, 1)
@@ -273,8 +280,9 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     binding.pbRecommended.visibility = View.GONE
 
-                    val recommended = response.body()!!.data.restaurants ?: emptyList()
-                    recommendedAdapter.updateList(recommended)
+                    val allRestaurants = response.body()!!.data.restaurants ?: emptyList()
+                    val filteredRestaurants = allRestaurants.filter { it.menu.isNotEmpty() } // skip empty menus
+                    recommendedAdapter.updateList(filteredRestaurants)
                 }else {
                     Toast.makeText(this@MainActivity, "Failed to load restaurants", Toast.LENGTH_SHORT).show()
                 }
@@ -341,5 +349,4 @@ class MainActivity : AppCompatActivity() {
             ImageViewCompat.setImageTintList(button, ColorStateList.valueOf(color))
         }
     }
-
 }
