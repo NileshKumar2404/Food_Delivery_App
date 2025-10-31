@@ -111,6 +111,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, MenuItemActivity::class.java))
             finish()
         }
+
+        binding.tvViewAll.setOnClickListener {
+            startActivity(Intent(this, AllRestaurantActivity::class.java))
+            finish()
+        }
     }
     private fun setupAdapters() {
         val prefs = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
@@ -272,7 +277,7 @@ class MainActivity : AppCompatActivity() {
 
         val apiServiceWithInterceptor = retrofit.create(ApiService::class.java)
 
-        apiServiceWithInterceptor.getAllRestaurant().enqueue(object : Callback<GetAllRestaurantResponse> {
+        apiServiceWithInterceptor. getAllRestaurant().enqueue(object : Callback<GetAllRestaurantResponse> {
             override fun onResponse(
                 call: Call<GetAllRestaurantResponse?>,
                 response: Response<GetAllRestaurantResponse?>
@@ -280,8 +285,8 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     binding.pbRecommended.visibility = View.GONE
 
-                    val allRestaurants = response.body()!!.data.restaurants ?: emptyList()
-                    val filteredRestaurants = allRestaurants.filter { it.menu.isNotEmpty() } // skip empty menus
+                    val allRestaurants = response.body()!!.data.restaurants
+                    val filteredRestaurants = allRestaurants.filter { it.menu.isNotEmpty() }
                     recommendedAdapter.updateList(filteredRestaurants)
                 }else {
                     Toast.makeText(this@MainActivity, "Failed to load restaurants", Toast.LENGTH_SHORT).show()
